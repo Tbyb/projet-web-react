@@ -1,0 +1,13 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Exemple de tâche",
+      "description": "Ceci est une tâche exemple",
+      "subject": "React",
+      "priority": "haute",
+      "status": "en cours",
+      "createdAt": "2026-02-14T10:00:00.000Z"
+    }
+  ]
+}
