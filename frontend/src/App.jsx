@@ -1,22 +1,21 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import './App.css'
-
-// Pages temporaires (vos pages à remplacer)
-const Login = () => <div>Page de connexion</div>
-const Dashboard = () => <div>Tableau de bord</div>
-const Tasks = () => <div>Gestion des tâches</div>
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';  // Enlève BrowserRouter
+import Tasks from './pages/Tasks';
+import Dashboard from './pages/Dashboard';
+import Header from './components/Layout/Header';
+import './styles/App.css';
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <Header />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Navigate to="/tasks" />} />
         <Route path="/tasks" element={<Tasks />} />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
-    </div>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;
