@@ -8,7 +8,9 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     // Simulation de connexion
     setUser({ email, name: 'Étudiant' })
+    return true   // retourne true pour signaler succès
   }
+
 
   const logout = () => {
     setUser(null)
