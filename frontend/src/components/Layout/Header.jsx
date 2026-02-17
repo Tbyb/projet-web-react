@@ -1,25 +1,30 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <header className="header">
       <div className="logo">
         <h1>📚 Gestionnaire de Tâches</h1>
       </div>
+
       <nav className="nav">
-        <Link to="/tasks" className={location.pathname === '/tasks' ? 'active' : ''}>
-          📋 Tâches
-        </Link>
-        <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active' : ''}>
-          📊 Dashboard
-        </Link>
+        <Link to="/task"  className={location.pathname === "/task" ? "active" : ""} > 📋 Tâches </Link>
+        <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}  >  📊 Dashboard </Link>
       </nav>
+
       <div className="user-info">
-        <span>👤 Étudiant</span>
-        <button className="btn-logout">Déconnexion</button>
+        <span>Bienvenue {user?.name}</span>
+        <button onClick={handleLogout}>Se déconnecter</button>
       </div>
     </header>
   );

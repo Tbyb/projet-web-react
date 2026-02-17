@@ -1,5 +1,6 @@
-// Données mock pour le Jour 1
-const MOCK_TASKS = [
+// src/services/taskService.js
+
+let MOCK_TASKS = [
   {
     id: 1,
     title: "Rendre le projet React",
@@ -29,57 +30,51 @@ const MOCK_TASKS = [
   }
 ];
 
-export const taskService = {
-  getTasks: () => {
+const taskService = {
+  getTasks: async () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        console.log('📦 Données mock chargées');
+        console.log("📦 Données mock chargées");
         resolve([...MOCK_TASKS]);
-      }, 500);
+      }, 300);
     });
   },
 
-  addTask: (task) => {
+  addTask: async (task) => {
     return new Promise((resolve) => {
-      setTimeout(() => {
-        const newTask = {
-          ...task,
-          id: Date.now(),
-        };
-        MOCK_TASKS.push(newTask);
-        console.log('➕ Tâche ajoutée:', newTask);
-        resolve(newTask);
-      }, 500);
+      const newTask = {
+        ...task,
+        id: Date.now(),
+        status: "en cours",
+      };
+      MOCK_TASKS.push(newTask);
+      resolve(newTask);
     });
   },
 
-  updateTask: (id, updatedTask) => {
+  updateTask: async (id, updatedTask) => {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const index = MOCK_TASKS.findIndex(t => t.id === id);
-        if (index !== -1) {
-          MOCK_TASKS[index] = { ...MOCK_TASKS[index], ...updatedTask };
-          console.log('✏️ Tâche modifiée:', MOCK_TASKS[index]);
-          resolve(MOCK_TASKS[index]);
-        } else {
-          reject(new Error('Tâche non trouvée'));
-        }
-      }, 500);
+      const index = MOCK_TASKS.findIndex(t => t.id === id);
+      if (index !== -1) {
+        MOCK_TASKS[index] = { ...MOCK_TASKS[index], ...updatedTask };
+        resolve(MOCK_TASKS[index]);
+      } else {
+        reject(new Error("Tâche non trouvée"));
+      }
     });
   },
 
-  deleteTask: (id) => {
+  deleteTask: async (id) => {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const index = MOCK_TASKS.findIndex(t => t.id === id);
-        if (index !== -1) {
-          const deleted = MOCK_TASKS.splice(index, 1);
-          console.log('🗑️ Tâche supprimée:', deleted[0]);
-          resolve({ message: 'Tâche supprimée' });
-        } else {
-          reject(new Error('Tâche non trouvée'));
-        }
-      }, 500);
+      const index = MOCK_TASKS.findIndex(t => t.id === id);
+      if (index !== -1) {
+        MOCK_TASKS.splice(index, 1);
+        resolve(true);
+      } else {
+        reject(new Error("Tâche non trouvée"));
+      }
     });
   }
 };
+
+export default taskService;
