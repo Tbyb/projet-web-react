@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Task from './pages/Task'
 import './App.css'
 
 // Pages temporaires (vos pages à remplacer)
@@ -16,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={ <ProtectedRoute> <Dashboard />  </ProtectedRoute> } />
-      
+        <Route path="/task" element={ <ProtectedRoute> <Task />  </ProtectedRoute> } />
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
     </div>

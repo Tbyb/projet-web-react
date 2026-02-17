@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,14 +11,22 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
- if (email && password) {
+     const success = login(email, password);
+    if (success) navigate('/task');
+ /*if (email && password) {
       login(email, password)
       navigate('/dashboard') // Redirection après connexion
     } 
  else {
       alert("Veuillez remplir tous les champs")
-    }
+    }*/
+
   };
+
+  const { user } = useAuth();
+useEffect(() => {
+  if (user) navigate('/task');
+}, [user, navigate]);
 
   return (
     <div style={{ maxWidth: 400, margin: 'auto', padding: 20 }}>
