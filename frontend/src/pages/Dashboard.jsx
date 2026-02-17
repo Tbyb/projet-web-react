@@ -14,23 +14,27 @@ const Dashboard = () => {
   }, []);
 
   const loadStats = async () => {
-    const tasks = await taskService.getTasks();
-    
-    const enCours = tasks.filter(t => t.status === 'en cours').length;
-    const terminees = tasks.filter(t => t.status === 'terminé').length;
-    
-    const parMatiere = tasks.reduce((acc, task) => {
-      const matiere = task.subject || 'Sans matière';
-      acc[matiere] = (acc[matiere] || 0) + 1;
-      return acc;
-    }, {});
+    try {
+      const tasks = await taskService.getTasks();
+      
+      const enCours = tasks.filter(t => t.status === 'en cours').length;
+      const terminees = tasks.filter(t => t.status === 'terminé').length;
+      
+      const parMatiere = tasks.reduce((acc, task) => {
+        const matiere = task.subject || 'Sans matière';
+        acc[matiere] = (acc[matiere] || 0) + 1;
+        return acc;
+      }, {});
 
-    setStats({
-      total: tasks.length,
-      enCours,
-      terminees,
-      parMatiere
-    });
+      setStats({
+        total: tasks.length,
+        enCours,
+        terminees,
+        parMatiere
+      });
+    } catch (error) {
+      console.error('Erreur chargement stats:', error);
+    }
   };
 
   return (
@@ -63,23 +67,6 @@ const Dashboard = () => {
           ))}
         </div>
       </div>
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
-
-const Dashboard = () => {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
-  return (
-    <div>
-      <h1>Tableau de bord</h1>
-      <p>Bienvenue {user?.name} ({user?.email})</p>
-      <button onClick={handleLogout}>Déconnexion</button>
     </div>
   );
 };
