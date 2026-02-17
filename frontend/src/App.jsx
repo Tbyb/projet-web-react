@@ -1,3 +1,18 @@
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';  // Enlève BrowserRouter
+import Tasks from './pages/Tasks';
+import Dashboard from './pages/Dashboard';
+import Header from './components/Layout/Header';
+import './styles/App.css';
+
+function App() {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Navigate to="/tasks" />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 import { Routes, Route, Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
@@ -20,8 +35,8 @@ function App() {
         <Route path="/task" element={ <ProtectedRoute> <Task />  </ProtectedRoute> } />
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
-    </div>
-  )
+    </>
+  );
 }
 
-export default App
+export default App;
