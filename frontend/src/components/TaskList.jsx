@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import TaskItem from './TaskItem';
-import { taskService } from '../services/taskService';
+import { useEffect, useState } from "react";
+import TaskItem from "./TaskItem";
+import taskService from "../services/taskService";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('all');
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [filterSubject, setFilterSubject] = useState("all");
+  const [filterPriority, setFilterPriority] = useState("all");
+
 
   useEffect(() => {
     loadTasks();
@@ -19,8 +22,8 @@ const TaskList = () => {
       setTasks(data);
       setError(null);
     } catch (err) {
-      setError('Erreur de chargement');
       console.error(err);
+      setError("Erreur de chargement");
     } finally {
       setLoading(false);
     }
@@ -28,48 +31,71 @@ const TaskList = () => {
 
   const handleUpdateTask = async (id, updatedTask) => {
     try {
-      const result = await taskService.updateTask(id, updatedTask);
-      setTasks(tasks.map(t => t.id === id ? result : t));
-    } catch (err) {
-      alert('Erreur lors de la modification');
+      const updated = await taskService.updateTask(id, updatedTask);
+      setTasks(tasks.map(t => (t.id === id ? updated : t)));
+    } catch {
+      alert("Erreur lors de la modification");
     }
   };
 
   const handleDeleteTask = async (id) => {
-    if (window.confirm('Supprimer cette tâche ?')) {
+    if (window.confirm("Supprimer cette tâche ?")) {
       try {
         await taskService.deleteTask(id);
         setTasks(tasks.filter(t => t.id !== id));
-      } catch (err) {
-        alert('Erreur lors de la suppression');
+      } catch {
+        alert("Erreur lors de la suppression");
       }
     }
   };
 
-  const filteredTasks = tasks.filter(task => {
-    if (filter === 'en cours') return task.status === 'en cours';
-    if (filter === 'terminé') return task.status === 'terminé';
-    return true;
-  });
+const filteredTasks = tasks.filter(task => {
+  if (filterStatus !== "all" && task.status !== filterStatus) return false;
+  if (filterSubject !== "all" && task.subject !== filterSubject) return false;
+  if (filterPriority !== "all" && task.priority !== filterPriority) return false;
+  return true;
+});
 
-  if (loading) return <div className="loading">Chargement...</div>;
-  if (error) return <div className="error">{error}</div>;
+
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="task-list">
       <div className="task-list-header">
-        <h2>Mes Tâches ({filteredTasks.length})</h2>
+        <h2>Mes tâches ({filteredTasks.length})</h2>
+
         <div className="filters">
-          <button onClick={() => setFilter('all')} className={filter === 'all' ? 'active' : ''}>Toutes</button>
-          <button onClick={() => setFilter('en cours')} className={filter === 'en cours' ? 'active' : ''}>En cours</button>
-          <button onClick={() => setFilter('terminé')} className={filter === 'terminé' ? 'active' : ''}>Terminées</button>
-        </div>
+
+  {/* Filtre par état */}
+  <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+    <option value="all">Tous les états</option>
+    <option value="en cours">En cours</option>
+    <option value="terminé">Terminées</option>
+  </select>
+
+  {/* Filtre par matière */}
+  <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)}>
+    <option value="all">Toutes les matières</option>
+    <option value="Programmation Web">Programmation Web</option>
+    <option value="Mathématiques">Mathématiques</option>
+    <option value="Communication">Communication</option>
+  </select>
+
+  {/* Filtre par priorité */}
+  <select value={filterPriority} onChange={e => setFilterPriority(e.target.value)}>
+    <option value="all">Toutes les priorités</option>
+    <option value="haute">Haute</option>
+    <option value="moyenne">Moyenne</option>
+    <option value="basse">Basse</option>
+  </select>
+
+</div>
+
       </div>
 
       {filteredTasks.length === 0 ? (
-        <div className="empty-state">
-          <p>Aucune tâche à afficher</p>
-        </div>
+        <p>Aucune tâche à afficher</p>
       ) : (
         <div className="tasks-container">
           {filteredTasks.map(task => (
@@ -87,3 +113,4 @@ const TaskList = () => {
 };
 
 export default TaskList;
+

@@ -1,14 +1,28 @@
-import { useAuth } from "../contexts/AuthContext";
+import React from 'react';
+import TaskList from '../components/TaskList';
+import TaskForm from '../components/TaskForm';
+import  taskService  from '../services/taskService';
 
 const Task = () => {
-  const { user, logout } = useAuth();
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>Mes tâches</h2>
-      <p>Bienvenue {user?.name}</p>
-      <button onClick={logout}>Se déconnecter</button>
+  const [refresh, setRefresh] = React.useState(0);
 
-      <p> Liste des tâches à venir...</p>
+  const handleAddTask = async (newTask) => {
+    await taskService.addTask(newTask);
+    setRefresh(prev => prev + 1);
+  };
+
+  return (
+    <div className="page task-page">
+      
+      <div className="page-content">
+        <div className="form-section">
+          <TaskForm onAddTask={handleAddTask} />
+        </div>
+        
+        <div className="list-section">
+          <TaskList key={refresh} />
+        </div>
+      </div>
     </div>
   );
 };
