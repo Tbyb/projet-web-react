@@ -1,6 +1,6 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
-export const taskService = {
+const taskService = {
   getTasks: async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/tasks`);
@@ -55,3 +55,5 @@ export const taskService = {
     }
   }
 };
+
+export default taskService;

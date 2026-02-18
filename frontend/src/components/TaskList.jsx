@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import TaskItem from './TaskItem';
-import { taskService } from '../services/taskService';
+import { useEffect, useState } from "react";
+import TaskItem from "./TaskItem";
+import taskService from "../services/taskService";
 
 const TaskList = ({ refreshKey = 0 }) => {
   const [tasks, setTasks] = useState([]);
@@ -36,7 +36,7 @@ const TaskList = ({ refreshKey = 0 }) => {
   };
 
   const handleDeleteTask = async (id) => {
-    if (window.confirm('Supprimer cette tâche ?')) {
+    if (window.confirm("Supprimer cette tâche ?")) {
       try {
         await taskService.deleteTask(id);
         setTasks(tasks.filter(t => t.id !== id));
@@ -61,14 +61,14 @@ const TaskList = ({ refreshKey = 0 }) => {
     return true;
   });
 
-  if (loading) return <div className="loading">Chargement...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (loading) return <p>Chargement...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="task-list">
       <div className="task-list-header">
         <h2>Mes Tâches</h2>
-        
+
         <div className="filter-section">
           <div className="filter-group">
             <label>Statut :</label>
@@ -113,9 +113,7 @@ const TaskList = ({ refreshKey = 0 }) => {
       </div>
 
       {filteredTasks.length === 0 ? (
-        <div className="empty-state">
-          <p>Aucune tâche à afficher</p>
-        </div>
+        <p>Aucune tâche à afficher</p>
       ) : (
         <div className="tasks-container">
           {filteredTasks.map(task => (
