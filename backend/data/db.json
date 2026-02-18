@@ -1,13 +1,44 @@
 {
   "tasks": [
     {
-      "id": 1,
-      "title": "Exemple de tâche",
-      "description": "Ceci est une tâche exemple",
-      "subject": "React",
-      "priority": "haute",
+      "id": 1771413999963,
+      "title": "Rendre le projet React",
+      "description": "Finaliser l'application et pousser sur GitHub",
+      "subject": "Programmation Web",
+      "priority": "moyenne",
+      "dueDate": "2026-02-18",
+      "status": "terminé",
+      "createdAt": "2026-02-18T11:26:39.963Z"
+    },
+    {
+      "id": 1771414079033,
+      "title": "Réviser examen Maths",
+      "description": "Chapitres 5 à 8 (intégrales, matrices)",
+      "subject": "Mathématiques",
+      "priority": "basse",
+      "dueDate": "2026-02-22",
+      "status": "terminé",
+      "createdAt": "2026-02-18T11:27:59.033Z"
+    },
+    {
+      "id": 1771414136049,
+      "title": "Inscription administrative\t",
+      "description": "Finaliser le dossier pour le semestre prochain",
+      "subject": "Communication",
+      "priority": "moyenne",
+      "dueDate": "2026-02-03",
       "status": "en cours",
-      "createdAt": "2026-02-14T10:00:00.000Z"
+      "createdAt": "2026-02-18T11:28:56.049Z"
+    },
+    {
+      "id": 1771414175081,
+      "title": "projet",
+      "description": "ggggggggggggggggg",
+      "subject": "",
+      "priority": "haute",
+      "dueDate": "2026-02-22",
+      "status": "en cours",
+      "createdAt": "2026-02-18T11:29:35.081Z"
     }
   ]
 }

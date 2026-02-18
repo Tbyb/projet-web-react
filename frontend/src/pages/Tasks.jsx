@@ -4,11 +4,16 @@ import TaskForm from '../components/TaskForm';
 import { taskService } from '../services/taskService';
 
 const Tasks = () => {
-  const [refresh, setRefresh] = React.useState(0);
+  const [refreshKey, setRefreshKey] = React.useState(0);
 
-  const handleAddTask = async (newTask) => {
-    await taskService.addTask(newTask);
-    setRefresh(prev => prev + 1);
+  const handleTaskAdded = async (newTask) => {
+    try {
+      await taskService.addTask(newTask);
+      setRefreshKey(prev => prev + 1);
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout:', error);
+      alert("Erreur lors de l'ajout de la tâche");
+    }
   };
 
   return (
@@ -20,11 +25,11 @@ const Tasks = () => {
       
       <div className="page-content">
         <div className="form-section">
-          <TaskForm onAddTask={handleAddTask} />
+          <TaskForm onAddTask={handleTaskAdded} />
         </div>
         
         <div className="list-section">
-          <TaskList key={refresh} />
+          <TaskList key={refreshKey} refreshKey={refreshKey} />
         </div>
       </div>
     </div>

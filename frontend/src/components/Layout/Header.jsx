@@ -11,15 +11,15 @@ const Header = () => {
       </div>
       <nav className="nav">
         <Link to="/tasks" className={location.pathname === '/tasks' ? 'active' : ''}>
-          📋 Tâches
+          Tâches
         </Link>
         <Link to="/dashboard" className={location.pathname === '/dashboard' ? 'active' : ''}>
-          📊 Dashboard
+          Dashboard
         </Link>
       </nav>
       <div className="user-info">
         <span>👤 Étudiant</span>
-        <button className="btn-logout">Déconnexion</button>
+        <button className="logout-btn">Déconnexion</button>
       </div>
     </header>
   );
