@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskList from '../components/TaskList';
 import TaskForm from '../components/TaskForm';
-import taskService from '../services/taskService';  // ✅ SANS accolades
+import taskService from '../services/taskService';
 
 const Tasks = () => {
   const [refreshKey, setRefreshKey] = React.useState(0);

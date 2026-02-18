@@ -4,18 +4,15 @@ const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    // Vérifie si un utilisateur est déjà stocké (persistance)
     const saved = localStorage.getItem("user")
     return saved ? JSON.parse(saved) : null
-
   })
 
   const login = (email, password) => {
-    // Simulation de connexion
-    const  fakeUser={ email, name: 'Étudiant' }
+    const fakeUser = { email, name: 'Étudiant' }
     setUser(fakeUser)
     localStorage.setItem("user", JSON.stringify(fakeUser))
-    return true   // retourne true pour signaler succès
+    return true
   }
 
   const logout = () => {

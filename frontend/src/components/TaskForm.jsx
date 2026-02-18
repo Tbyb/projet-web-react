@@ -31,6 +31,11 @@ const TaskForm = ({ onAddTask }) => {
       alert('Le titre est obligatoire');
       return;
     }
+    
+    if (!formData.subject) {
+      alert('Veuillez sélectionner une matière');
+      return;
+    }
 
     await onAddTask({
       ...formData,
@@ -75,10 +80,10 @@ const TaskForm = ({ onAddTask }) => {
 
       <div className="form-row">
         <div className="form-group">
-          <label>Matière</label>
-          <select name="subject" value={formData.subject} onChange={handleChange}>
-            <option value="">Choisir</option>
-            {subjects.map(s => <option key={s}>{s}</option>)}
+          <label>Matière <span className="required">*</span></label>
+          <select name="subject" value={formData.subject} onChange={handleChange} required>
+            <option value="">Choisir une matière</option>
+            {subjects.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
 

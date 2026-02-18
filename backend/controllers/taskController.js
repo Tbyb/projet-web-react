@@ -39,9 +39,9 @@ const validateTask = (task) => {
     errors.push('La priorité doit être : basse, moyenne ou haute');
   }
 
-  const validStatuses = ['non commencée', 'en cours', 'terminée'];
+  const validStatuses = ['non commencé', 'en cours', 'terminé'];
   if (!task.status || !validStatuses.includes(task.status)) {
-    errors.push('Le statut doit être : non commencée, en cours ou terminée');
+    errors.push('Le statut doit être : non commencé, en cours ou terminé');
   }
 
   return errors;
@@ -94,9 +94,9 @@ const getStats = (req, res) => {
 
     const stats = {
       total: tasks.length,
-      nonCommencee: tasks.filter(t => t.status === 'non commencée').length,
+      nonCommence: tasks.filter(t => t.status === 'non commencé').length,
       enCours: tasks.filter(t => t.status === 'en cours').length,
-      terminee: tasks.filter(t => t.status === 'terminée').length,
+      termine: tasks.filter(t => t.status === 'terminé').length,
       prioriteHaute: tasks.filter(t => t.priority === 'haute').length,
       parMatiere: {}
     };

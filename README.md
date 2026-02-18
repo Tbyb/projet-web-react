@@ -216,7 +216,7 @@ L'application démarre sur http://localhost:5173
   description: string,
   subject: string,          // "React", "JavaScript", "Node.js", etc.
   priority: string,         // "basse", "moyenne", "haute"
-  status: string,           // "non commencée", "en cours", "terminée"
+  status: string,           // "non commencé", "en cours", "terminé"
   createdAt: string (ISO)
 }
 ```
@@ -261,15 +261,146 @@ L'application démarre sur http://localhost:5173
 
 ## 📝 Livrables
 
-- [ ] Code source complet et fonctionnel
-- [ ] Dépôt GitHub avec commits réguliers
-- [ ] README à jour
-- [ ] Document de rapport (architecture, choix techniques)
-- [ ] Démonstration (vidéo ou présentation orale)
+- [x] Code source complet et fonctionnel
+- [x] Dépôt GitHub avec commits réguliers
+- [x] README à jour
+- [x] Document de rapport (architecture, choix techniques) - Voir [ARCHITECTURE.md](ARCHITECTURE.md)
+- [ ] Démonstration (vidéo ou présentation orale) - Voir guide ci-dessous
+
+---
+
+## 🎬 Guide de démonstration
+
+### Scénario de démonstration recommandé (10-15 minutes)
+
+#### 1. **Introduction (1-2 min)**
+- Présenter le projet : nom, objectif, technologies
+- Montrer l'architecture (Frontend React + Backend Express)
+- Expliquer la séparation des responsabilités
+
+#### 2. **Démonstration de l'authentification (2 min)**
+- Ouvrir la page de login
+- Tester la connexion (entrer n'importe quel email/password)
+- Montrer la redirection automatique vers le dashboard
+- Expliquer le contexte React (AuthContext) et localStorage
+- Tester la déconnexion
+
+#### 3. **Dashboard - Vue d'ensemble (2-3 min)**
+- Présenter les statistiques :
+  - Total des tâches
+  - Tâches en cours, terminées, non commencées
+  - Répartition par priorité (haute, moyenne, basse)
+  - Répartition par matière (avec barres de progression)
+- Expliquer comment les stats sont calculées côté frontend
+
+#### 4. **Gestion des tâches - CRUD complet (5-6 min)**
+
+**Créer une tâche :**
+- Aller sur la page "Tâches"
+- Remplir le formulaire (titre, description, matière, priorité, date)
+- Cliquer sur "Ajouter"
+- Montrer que la tâche apparaît dans la liste
+
+**Filtrer les tâches :**
+- Utiliser le filtre par statut (toutes, en cours, terminées)
+- Utiliser le filtre par matière
+- Montrer que les compteurs se mettent à jour
+
+**Modifier une tâche :**
+- Cliquer sur le bouton "✅" pour changer le statut (en cours → terminé)
+- Cliquer sur "✏️" pour modifier le titre
+- Montrer la mise à jour en temps réel
+
+**Supprimer une tâche :**
+- Cliquer sur "🗑️"
+- Confirmer la suppression
+- Montrer que la tâche disparaît
+
+#### 5. **Démonstration technique (2-3 min)**
+
+**Backend :**
+- Ouvrir le terminal avec le serveur en cours
+- Montrer le fichier `db.json` avec les données persistées
+- Ouvrir Postman/Thunder Client et tester une route API :
+  ```
+  GET http://localhost:5000/api/tasks
+  ```
+- Expliquer la structure JSON retournée
+
+**Frontend :**
+- Ouvrir DevTools → Réseau
+- Faire une action (ajouter une tâche)
+- Montrer la requête HTTP (POST)
+- Montrer la réponse du serveur
+
+**Code :**
+- Montrer rapidement un composant React (par exemple `TaskList.jsx`)
+- Expliquer :
+  - L'utilisation de `useState` et `useEffect`
+  - Les appels API via `taskService`
+  - Le passage de props
+
+#### 6. **Responsive Design (1 min)**
+- Redimensionner la fenêtre ou ouvrir DevTools → Mode responsive
+- Montrer que l'application s'adapte (mobile, tablette, desktop)
+- Montrer le menu responsive
+
+#### 7. **Conclusion (1 min)**
+- Récapituler les fonctionnalités implémentées
+- Mentionner les concepts React utilisés (hooks, contexte, routing)
+- Parler des améliorations possibles
+
+---
+
+### 📋 Checklist avant la démonstration
+
+- [ ] Nettoyer `db.json` (garder 4-5 tâches variées)
+- [ ] Tester que le backend démarre bien (`npm run dev`)
+- [ ] Tester que le frontend démarre bien (`npm run dev`)
+- [ ] Préparer une tâche exemple à ajouter en direct
+- [ ] Vérifier que Postman/Thunder Client fonctionne
+- [ ] Préparer les slides de présentation (optionnel)
+- [ ] Tester le scénario au moins une fois
+
+---
+
+### 🎥 Option : Vidéo de démonstration
+
+Si vous préférez une vidéo, enregistrez :
+1. **Introduction** : Présentation du projet (slides ou caméra)
+2. **Screen recording** : Démonstration complète du scénario ci-dessus
+3. **Code walkthrough** : Explication rapide de l'architecture (montrer les fichiers)
+4. **Conclusion** : Bilan et améliorations possibles
+
+**Outils recommandés :**
+- OBS Studio (gratuit)
+- Loom
+- ShareX (Windows)
+- QuickTime (Mac)
+
+---
+
+## 🏗️ Architecture détaillée
+
+Pour une documentation complète de l'architecture, consultez [ARCHITECTURE.md](ARCHITECTURE.md).
+
+Ce document explique :
+- L'architecture générale (client-serveur)
+- La structure des dossiers
+- Les flux de données
+- Les concepts React mis en œuvre
+- Les choix techniques justifiés
+
+---
 
 ## 🐛 Problèmes connus
 
-Aucun pour le moment. Le squelette est prêt !
+✅ **Tous les problèmes ont été résolus !**
+
+Corrections effectuées :
+- ✅ Incohérence de statuts (backend vs frontend) → Standardisé sur "terminé", "en cours", "non commencé"
+- ✅ Dashboard incomplet → Ajout stats priorités + barres de progression
+- ✅ Documentation manquante → ARCHITECTURE.md créé
 
 ## 📚 Ressources utiles
 

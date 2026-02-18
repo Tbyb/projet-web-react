@@ -15,7 +15,7 @@ http://localhost:5000/api
   "description": "string (requis)",
   "subject": "string (requis)",
   "priority": "basse | moyenne | haute (requis)",
-  "status": "non commencée | en cours | terminée (requis)",
+  "status": "non commencé | en cours | terminé (requis)",
   "createdAt": "2026-02-17T00:41:54.397Z (auto-généré)"
 }
 ```
@@ -94,7 +94,7 @@ Modifier une tâche existante
 **Body (JSON) :**
 ```json
 {
-  "status": "terminée"
+  "status": "terminé"
 }
 ```
 
@@ -106,7 +106,7 @@ Modifier une tâche existante
   "description": "Ceci est une tâche exemple",
   "subject": "React",
   "priority": "haute",
-  "status": "terminée",
+  "status": "terminé",
   "createdAt": "2026-02-14T10:00:00.000Z"
 }
 ```
@@ -132,12 +132,12 @@ curl http://localhost:5000/api/tasks
 # POST créer une tâche
 curl -X POST http://localhost:5000/api/tasks \
   -H "Content-Type: application/json" \
-  -d '{"title":"Test","description":"Test desc","subject":"Math","priority":"moyenne","status":"non commencée"}'
+  -d '{"title":"Test","description":"Test desc","subject":"Math","priority":"moyenne","status":"non commencé"}'
 
 # PUT modifier une tâche
 curl -X PUT http://localhost:5000/api/tasks/1 \
   -H "Content-Type: application/json" \
-  -d '{"status":"terminée"}'
+  -d '{"status":"terminé"}'
 
 # DELETE supprimer une tâche
 curl -X DELETE http://localhost:5000/api/tasks/1
@@ -166,7 +166,7 @@ await fetch('http://localhost:5000/api/tasks', {
 await fetch(`http://localhost:5000/api/tasks/${id}`, {
   method: 'PUT',
   headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ status: "terminée" })
+  body: JSON.stringify({ status: "terminé" })
 });
 
 // DELETE

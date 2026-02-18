@@ -1,72 +1,13 @@
 {
   "tasks": [
     {
-      "id": 1771413999963,
-      "title": "Rendre le projet React",
-      "description": "Finaliser l'application et pousser sur GitHub",
-      "subject": "Programmation Web",
-      "priority": "moyenne",
-      "dueDate": "2026-02-18",
-      "status": "terminé",
-      "createdAt": "2026-02-18T11:26:39.963Z"
-    },
-    {
-      "id": 1771414079033,
-      "title": "Réviser examen Maths",
-      "description": "Chapitres 5 à 8 (intégrales, matrices)",
-      "subject": "Mathématiques",
-      "priority": "basse",
-      "dueDate": "2026-02-22",
-      "status": "terminé",
-      "createdAt": "2026-02-18T11:27:59.033Z"
-    },
-    {
-      "id": 1771414136049,
-      "title": "Inscription administrative\t",
-      "description": "Finaliser le dossier pour le semestre prochain",
-      "subject": "Communication",
-      "priority": "moyenne",
-      "dueDate": "2026-02-03",
-      "status": "en cours",
-      "createdAt": "2026-02-18T11:28:56.049Z"
-    },
-    {
-      "id": 1771414175081,
-      "title": "projet",
-      "description": "ggggggggggggggggg",
-      "subject": "",
-      "priority": "haute",
-      "dueDate": "2026-02-22",
-      "status": "terminé",
-      "createdAt": "2026-02-18T11:29:35.081Z"
-    },
-    {
-      "id": 1771415370437,
-      "title": "jh",
-      "description": "kp",
-      "subject": "Communication",
-      "priority": "moyenne",
-      "dueDate": "2026-02-18",
-      "status": "en cours",
-      "createdAt": "2026-02-18T11:49:30.437Z"
-    },
-    {
-      "id": 1771421058293,
-      "title": "kjjjjj",
-      "description": "mmmmm",
-      "subject": "Communication",
-      "priority": "moyenne",
-      "dueDate": "2026-02-18",
-      "status": "en cours",
-      "createdAt": "2026-02-18T13:24:18.293Z"
-    },
-    {
       "id": 1,
       "title": "Projet React MyStudyPlanner",
       "description": "Développer l'application web de gestion de devoirs",
-      "subject": "Développement Web",
+      "subject": "Programmation Web",
       "priority": "haute",
       "status": "en cours",
+      "dueDate": "2026-02-28",
       "createdAt": "2026-02-14T10:00:00.000Z"
     },
     {
@@ -75,16 +16,18 @@
       "description": "Créer une API REST avec Express et stockage JSON",
       "subject": "Backend",
       "priority": "haute",
-      "status": "terminée",
+      "status": "terminé",
+      "dueDate": "2026-02-15",
       "createdAt": "2026-02-13T09:00:00.000Z"
     },
     {
       "id": 3,
-      "title": "Cours de bases de données",
-      "description": "Réviser les requêtes SQL et les jointures",
+      "title": "Réviser bases de données",
+      "description": "Réviser les requêtes SQL et les jointures pour l'examen",
       "subject": "Base de données",
       "priority": "moyenne",
-      "status": "non commencée",
+      "status": "en cours",
+      "dueDate": "2026-02-25",
       "createdAt": "2026-02-15T14:00:00.000Z"
     },
     {
@@ -93,26 +36,38 @@
       "description": "Exercices sur les arbres binaires et les graphes",
       "subject": "Algorithmique",
       "priority": "haute",
-      "status": "en cours",
+      "status": "non commencé",
+      "dueDate": "2026-02-24",
       "createdAt": "2026-02-16T08:00:00.000Z"
     },
     {
-      "id": 5,
-      "title": "Rapport de stage",
-      "description": "Rédiger le rapport de stage de fin d'année",
-      "subject": "Développement Web",
-      "priority": "moyenne",
-      "status": "non commencée",
-      "createdAt": "2026-02-17T10:00:00.000Z"
+      "id": 7,
+      "title": "Présentation anglais",
+      "description": "Préparer exposé oral sur les nouvelles technologies",
+      "subject": "Anglais",
+      "priority": "basse",
+      "status": "terminé",
+      "dueDate": "2026-02-17",
+      "createdAt": "2026-02-10T09:00:00.000Z"
     },
     {
-      "id": 1771427382497,
-      "title": ",njhyi",
-      "description": "ooooooooo",
-      "subject": "Mathématiques",
+      "id": 8,
+      "title": "TP Réseaux",
+      "description": "Configuration routeurs et protocoles TCP/IP",
+      "subject": "Réseaux",
       "priority": "moyenne",
       "status": "en cours",
-      "createdAt": "2026-02-18T15:09:42.497Z"
+      "dueDate": "2026-02-26",
+      "createdAt": "2026-02-15T11:00:00.000Z"
+    },
+    {
+      "id": 1771432087865,
+      "title": "hhhh",
+      "description": "jjjjj",
+      "subject": "Programmation Web",
+      "priority": "basse",
+      "status": "en cours",
+      "createdAt": "2026-02-18T16:28:07.865Z"
     }
   ]
 }

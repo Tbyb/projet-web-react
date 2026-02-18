@@ -31,7 +31,7 @@ const TaskList = ({ refreshKey = 0 }) => {
       const result = await taskService.updateTask(id, updatedTask);
       setTasks(tasks.map(t => t.id === id ? result : t));
     } catch (err) {
-      alert('Erreur modification');
+      alert('Erreur lors de la modification de la tâche');
     }
   };
 
