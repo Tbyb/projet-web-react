@@ -18,8 +18,12 @@ const Header = () => {
       </div>
 
       <nav className="nav">
-        <Link to="/task"  className={location.pathname === "/task" ? "active" : ""} > 📋 Tâches </Link>
-        <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}  >  📊 Dashboard </Link>
+        <Link to="/task" className={location.pathname === "/task" ? "active" : ""}>
+          📋 Tâches
+        </Link>
+        <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}>
+          📊 Dashboard
+        </Link>
       </nav>
 
       <div className="user-info">

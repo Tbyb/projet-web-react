@@ -4,13 +4,43 @@ const TaskItem = ({ task, onUpdate, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
 
-  const getPriorityClass = (priority) => {
-    switch(priority) {
-      case 'haute': return 'priority-high';
-      case 'moyenne': return 'priority-medium';
-      case 'basse': return 'priority-low';
-      default: return '';
-    }
+  const priorityColors = {
+    haute: 'priority-high',
+    moyenne: 'priority-medium',
+    basse: 'priority-low'
+  };
+
+  const priorityLabels = {
+    haute: '🔴 Haute',
+    moyenne: '🟡 Moyenne',
+    basse: '🟢 Basse'
+  };
+
+  const statusLabels = {
+    'en cours': '⏳ En cours',
+    'terminé': '✅ Terminé'
+  };
+
+  const getSubjectColor = (subject) => {
+    const colors = {
+      'Programmation Web': '#6366f1',
+      'Mathématiques': '#ef4444',
+      'Algorithmique': '#10b981',
+      'Base de données': '#f59e0b',
+      'Réseaux': '#8b5cf6',
+      'Anglais': '#ec4899',
+      'Communication': '#14b8a6',
+      'Autre': '#6b7280'
+    };
+    return colors[subject] || '#6b7280';
+  };
+
+  const isUrgent = () => {
+    if (task.status === 'terminé') return false;
+    const today = new Date();
+    const dueDate = new Date(task.dueDate);
+    const diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+    return diffDays <= 2 && diffDays >= 0;
   };
 
   const handleUpdate = () => {
@@ -18,11 +48,6 @@ const TaskItem = ({ task, onUpdate, onDelete }) => {
       onUpdate(task.id, { ...task, title: editedTitle });
       setIsEditing(false);
     }
-  };
-
-  const toggleStatus = () => {
-    const newStatus = task.status === 'terminé' ? 'en cours' : 'terminé';
-    onUpdate(task.id, { ...task, status: newStatus });
   };
 
   if (isEditing) {
@@ -41,27 +66,54 @@ const TaskItem = ({ task, onUpdate, onDelete }) => {
   }
 
   return (
-    <div className={`task-item ${getPriorityClass(task.priority)}`}>
+    <div className={`task-item ${priorityColors[task.priority]} ${isUrgent() ? 'urgent' : ''}`}>
       <div className="task-content">
-        <h3>{task.title}</h3>
+        <div className="task-header">
+          <h3>{task.title}</h3>
+          {isUrgent() && <span className="urgent-badge">⚠️ Urgent</span>}
+        </div>
+
         {task.description && <p className="task-description">{task.description}</p>}
+
         <div className="task-meta">
-          <span className="task-subject">{task.subject || 'Sans matière'}</span>
-          <span className={`task-status ${task.status === 'terminé' ? 'status-done' : 'status-progress'}`}>
-            {task.status}
+          <span className="task-subject" style={{ backgroundColor: getSubjectColor(task.subject) + '20', color: getSubjectColor(task.subject), borderLeft: `3px solid ${getSubjectColor(task.subject)}` }}>
+            📚 {task.subject || 'Sans matière'}
           </span>
-          <span className="task-date">📅 {task.dueDate}</span>
+
+          <span className={`task-status status-${task.status}`}>
+            {statusLabels[task.status]}
+          </span>
+
+          <span className={`task-priority priority-${task.priority}`}>
+            {priorityLabels[task.priority]}
+          </span>
+
+          <span className="task-date">
+            📅 {task.dueDate ? new Date(task.dueDate).toLocaleDateString('fr-FR') : 'Date non définie'}
+          </span>
         </div>
       </div>
 
       <div className="task-actions">
-        <button onClick={toggleStatus} className="btn-status" title={task.status === 'terminé' ? 'Réouvrir' : 'Terminer'}>
+        <button
+          onClick={() => onUpdate(task.id, { ...task, status: task.status === 'terminé' ? 'en cours' : 'terminé' })}
+          className="btn-status"
+          title="Changer le statut"
+        >
           {task.status === 'terminé' ? '↩️' : '✅'}
         </button>
-        <button onClick={() => setIsEditing(true)} className="btn-edit" title="Modifier">
+        <button
+          onClick={() => setIsEditing(true)}
+          className="btn-edit"
+          title="Modifier"
+        >
           ✏️
         </button>
-        <button onClick={() => onDelete(task.id)} className="btn-delete" title="Supprimer">
+        <button
+          onClick={() => onDelete(task.id)}
+          className="btn-delete"
+          title="Supprimer"
+        >
           🗑️
         </button>
       </div>

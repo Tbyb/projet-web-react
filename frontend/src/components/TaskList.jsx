@@ -2,18 +2,16 @@ import { useEffect, useState } from "react";
 import TaskItem from "./TaskItem";
 import taskService from "../services/taskService";
 
-const TaskList = () => {
+const TaskList = ({ refreshKey = 0 }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filterStatus, setFilterStatus] = useState("all");
-  const [filterSubject, setFilterSubject] = useState("all");
-  const [filterPriority, setFilterPriority] = useState("all");
-
+  const [filter, setFilter] = useState('all');
+  const [subjectFilter, setSubjectFilter] = useState('all');
 
   useEffect(() => {
     loadTasks();
-  }, []);
+  }, [refreshKey]);
 
   const loadTasks = async () => {
     try {
@@ -22,8 +20,7 @@ const TaskList = () => {
       setTasks(data);
       setError(null);
     } catch (err) {
-      console.error(err);
-      setError("Erreur de chargement");
+      setError('Impossible de charger les tâches');
     } finally {
       setLoading(false);
     }
@@ -31,10 +28,10 @@ const TaskList = () => {
 
   const handleUpdateTask = async (id, updatedTask) => {
     try {
-      const updated = await taskService.updateTask(id, updatedTask);
-      setTasks(tasks.map(t => (t.id === id ? updated : t)));
-    } catch {
-      alert("Erreur lors de la modification");
+      const result = await taskService.updateTask(id, updatedTask);
+      setTasks(tasks.map(t => t.id === id ? result : t));
+    } catch (err) {
+      alert('Erreur modification');
     }
   };
 
@@ -43,19 +40,26 @@ const TaskList = () => {
       try {
         await taskService.deleteTask(id);
         setTasks(tasks.filter(t => t.id !== id));
-      } catch {
-        alert("Erreur lors de la suppression");
+      } catch (err) {
+        alert('Erreur suppression');
       }
     }
   };
 
-const filteredTasks = tasks.filter(task => {
-  if (filterStatus !== "all" && task.status !== filterStatus) return false;
-  if (filterSubject !== "all" && task.subject !== filterSubject) return false;
-  if (filterPriority !== "all" && task.priority !== filterPriority) return false;
-  return true;
-});
+  const counts = {
+    all: tasks.length,
+    enCours: tasks.filter(t => t.status === 'en cours').length,
+    termine: tasks.filter(t => t.status === 'terminé').length
+  };
 
+  const subjects = ['all', ...new Set(tasks.map(t => t.subject).filter(Boolean))];
+
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'en cours' && task.status !== 'en cours') return false;
+    if (filter === 'terminé' && task.status !== 'terminé') return false;
+    if (subjectFilter !== 'all' && task.subject !== subjectFilter) return false;
+    return true;
+  });
 
   if (loading) return <p>Chargement...</p>;
   if (error) return <p className="error">{error}</p>;
@@ -63,35 +67,49 @@ const filteredTasks = tasks.filter(task => {
   return (
     <div className="task-list">
       <div className="task-list-header">
-        <h2>Mes tâches ({filteredTasks.length})</h2>
+        <h2>Mes Tâches</h2>
 
-        <div className="filters">
+        <div className="filter-section">
+          <div className="filter-group">
+            <label>Statut :</label>
+            <div className="filter-buttons">
+              <button
+                onClick={() => setFilter('all')}
+                className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+              >
+                Toutes <span className="count">{counts.all}</span>
+              </button>
+              <button
+                onClick={() => setFilter('en cours')}
+                className={`filter-btn ${filter === 'en cours' ? 'active' : ''}`}
+              >
+                ⏳ En cours <span className="count">{counts.enCours}</span>
+              </button>
+              <button
+                onClick={() => setFilter('terminé')}
+                className={`filter-btn ${filter === 'terminé' ? 'active' : ''}`}
+              >
+                ✅ Terminées <span className="count">{counts.termine}</span>
+              </button>
+            </div>
+          </div>
 
-  {/* Filtre par état */}
-  <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
-    <option value="all">Tous les états</option>
-    <option value="en cours">En cours</option>
-    <option value="terminé">Terminées</option>
-  </select>
-
-  {/* Filtre par matière */}
-  <select value={filterSubject} onChange={e => setFilterSubject(e.target.value)}>
-    <option value="all">Toutes les matières</option>
-    <option value="Programmation Web">Programmation Web</option>
-    <option value="Mathématiques">Mathématiques</option>
-    <option value="Communication">Communication</option>
-  </select>
-
-  {/* Filtre par priorité */}
-  <select value={filterPriority} onChange={e => setFilterPriority(e.target.value)}>
-    <option value="all">Toutes les priorités</option>
-    <option value="haute">Haute</option>
-    <option value="moyenne">Moyenne</option>
-    <option value="basse">Basse</option>
-  </select>
-
-</div>
-
+          <div className="filter-group">
+            <label>Matière :</label>
+            <select
+              value={subjectFilter}
+              onChange={(e) => setSubjectFilter(e.target.value)}
+              className="subject-select"
+            >
+              <option value="all">Toutes les matières</option>
+              {subjects.filter(s => s !== 'all').map(subject => (
+                <option key={subject} value={subject}>
+                  {subject}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
       </div>
 
       {filteredTasks.length === 0 ? (
@@ -113,4 +131,3 @@ const filteredTasks = tasks.filter(task => {
 };
 
 export default TaskList;
-

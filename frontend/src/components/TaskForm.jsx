@@ -32,36 +32,32 @@ const TaskForm = ({ onAddTask }) => {
       return;
     }
 
-    try {
-      await onAddTask({
-        ...formData,
-        status: 'en cours'
-      });
-      
-      setFormData({
-        title: '',
-        description: '',
-        subject: '',
-        priority: 'moyenne',
-        dueDate: new Date().toISOString().split('T')[0]
-      });
-    } catch (error) {
-      alert('Erreur lors de l\'ajout');
-    }
+    await onAddTask({
+      ...formData,
+      status: 'en cours'
+    });
+
+    setFormData({
+      title: '',
+      description: '',
+      subject: '',
+      priority: 'moyenne',
+      dueDate: new Date().toISOString().split('T')[0]
+    });
   };
 
   return (
-    <form className="task-form" onSubmit={handleSubmit}>
+    <form className="task-form enhanced" onSubmit={handleSubmit}>
       <h3>Ajouter une tâche</h3>
       
       <div className="form-group">
-        <label>Titre *</label>
+        <label>Titre <span className="required">*</span></label>
         <input
           type="text"
           name="title"
           value={formData.title}
           onChange={handleChange}
-          placeholder="Ex: Rendre le projet"
+          placeholder="Ex. Rendre le projet"
           required
         />
       </div>
@@ -72,7 +68,7 @@ const TaskForm = ({ onAddTask }) => {
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Détails de la tâche..."
+          placeholder="Détails de la tâche ..."
           rows="2"
         />
       </div>
@@ -107,7 +103,7 @@ const TaskForm = ({ onAddTask }) => {
       </div>
 
       <button type="submit" className="btn-submit">
-        ➕ Ajouter
+        Ajouter
       </button>
     </form>
   );

@@ -1,79 +1,58 @@
-// src/services/taskService.js
-
-let MOCK_TASKS = [
-  {
-    id: 1,
-    title: "Rendre le projet React",
-    description: "Finaliser l'application et pousser sur GitHub",
-    subject: "Programmation Web",
-    priority: "haute",
-    status: "en cours",
-    dueDate: "2026-02-28"
-  },
-  {
-    id: 2,
-    title: "Réviser l'examen de Maths",
-    description: "Chapitres 5 à 8",
-    subject: "Mathématiques",
-    priority: "moyenne",
-    status: "terminé",
-    dueDate: "2026-02-20"
-  },
-  {
-    id: 3,
-    title: "Préparer la présentation",
-    description: "Slides pour la démo du projet",
-    subject: "Communication",
-    priority: "basse",
-    status: "en cours",
-    dueDate: "2026-02-25"
-  }
-];
+const API_BASE_URL = 'http://localhost:5000/api';
 
 const taskService = {
   getTasks: async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log("📦 Données mock chargées");
-        resolve([...MOCK_TASKS]);
-      }, 300);
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/tasks`);
+      if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error('❌ Erreur lors du chargement des tâches:', error);
+      throw error;
+    }
   },
 
   addTask: async (task) => {
-    return new Promise((resolve) => {
-      const newTask = {
-        ...task,
-        id: Date.now(),
-        status: "en cours",
-      };
-      MOCK_TASKS.push(newTask);
-      resolve(newTask);
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/tasks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task),
+      });
+      if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error('❌ Erreur lors de l\'ajout:', error);
+      throw error;
+    }
   },
 
   updateTask: async (id, updatedTask) => {
-    return new Promise((resolve, reject) => {
-      const index = MOCK_TASKS.findIndex(t => t.id === id);
-      if (index !== -1) {
-        MOCK_TASKS[index] = { ...MOCK_TASKS[index], ...updatedTask };
-        resolve(MOCK_TASKS[index]);
-      } else {
-        reject(new Error("Tâche non trouvée"));
-      }
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedTask),
+      });
+      if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error('❌ Erreur lors de la modification:', error);
+      throw error;
+    }
   },
 
   deleteTask: async (id) => {
-    return new Promise((resolve, reject) => {
-      const index = MOCK_TASKS.findIndex(t => t.id === id);
-      if (index !== -1) {
-        MOCK_TASKS.splice(index, 1);
-        resolve(true);
-      } else {
-        reject(new Error("Tâche non trouvée"));
-      }
-    });
+    try {
+      const response = await fetch(`${API_BASE_URL}/tasks/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error(`Erreur HTTP: ${response.status}`);
+      return await response.json();
+    } catch (error) {
+      console.error('❌ Erreur lors de la suppression:', error);
+      throw error;
+    }
   }
 };
 

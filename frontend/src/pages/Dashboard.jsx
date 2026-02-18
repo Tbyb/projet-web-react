@@ -19,23 +19,27 @@ const Dashboard = () => {
   }, []);
 
   const loadStats = async () => {
-    const tasks = await taskService.getTasks();
+    try {
+      const tasks = await taskService.getTasks();
 
-    const enCours = tasks.filter(t => t.status === 'en cours').length;
-    const terminees = tasks.filter(t => t.status === 'terminé').length;
+      const enCours = tasks.filter(t => t.status === 'en cours').length;
+      const terminees = tasks.filter(t => t.status === 'terminé').length;
 
-    const parMatiere = tasks.reduce((acc, tache) => {
-      const matiere = tache.subject || 'Sans matière';
-      acc[matiere] = (acc[matiere] || 0) + 1;
-      return acc;
-    }, {});
+      const parMatiere = tasks.reduce((acc, tache) => {
+        const matiere = tache.subject || 'Sans matière';
+        acc[matiere] = (acc[matiere] || 0) + 1;
+        return acc;
+      }, {});
 
-    setStats({
-      total: tasks.length,
-      enCours,
-      terminees,
-      parMatiere
-    });
+      setStats({
+        total: tasks.length,
+        enCours,
+        terminees,
+        parMatiere
+      });
+    } catch (error) {
+      console.error('Erreur chargement stats:', error);
+    }
   };
 
   const handleLogout = () => {
@@ -78,4 +82,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
